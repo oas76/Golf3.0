@@ -1,70 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Raymon Randomizer</title>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="../static/setup.css" rel="stylesheet">
-
-    <script type="text/javascript" src="../static/js/disablekey.js"></script>
-
-
-  </head>
-
-  <body>
-
-    <script type="text/javascript" src="../static/js/mustache.js" ></script>
-    <script type="text/javascript" src="../static/js/randomize.js"></script>
-
-
-
-    <div class="container">
-      <div>
-          <p></p>
-          <p></p>
-      </div>
-
-      <div class="row">
-
-        <div class="col-xs-6">
-
-          <div class="jumbotron">
-
-            <h2 align="center">Randomizer App</h2>
-            <form class="form-signin" id="inputform" method="POST">
-              <label for="teamsize" class="sr-only">Team Size</label>
-              <input type="text" align="center" pattern="[0-9.]" maxlength="1" name="teamsize" id="teamsize" class="form-control" placeholder="Team Size" required autofocus>
-              <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button" onclick="return loadXMLDoc()">Randomize</button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-
-        <div class="col-xs-6">
-          <div class="jumbotron" id="myDiv"></div>
-
-        </div>
-      </div>
-
-      <div class="row">
-
-        <div class="col-xs-6">
-          <div>
-            <a href="{{ url_for('players') }}" class="btn btn-basic btn-lg" >Edit Players</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-xs-6">
-          <footer class="footer">
-          <p>&copy; Raymon Tour Inc. 2015</p>
-          </footer>
-        </div>
-      </div>
-    </div>
-  </body>
+    <html>
+        <head lang="en">
+            <meta charset="UTF-8">
+            <title>Test</title>
+        </head>
+        <body>
+            <div id="root"></div>
+            <script src="static/bundle.js"></script>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        </body>
+        <footer class="footer">
+            <p>&copy; Raymon Tour Inc. 2015</p>
+        </footer>
+    </html>
