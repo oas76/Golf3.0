@@ -1,0 +1,7 @@
+node_modules/
+src/server/static/bundle.js
+src/components/app.js
+*-lock.json
+.idea/
+venv/
+
