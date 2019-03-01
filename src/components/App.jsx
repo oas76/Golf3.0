@@ -15,38 +15,23 @@ let data = [
     },
 ]
 
-class Form extends React.Component {
+class InputForm extends React.Component {
 
-    state = { pairingSize: ''};
-    handleInput = async (event) => {
-        event.preventDefault();
-        const resp = await axios.post(`http://127.0.0.1:5000/randomize?teamsize=${this.state.pairingSize}`);
-        console.log(resp.data);
+    constructor(props) {
+        super(props);
+        this.state = {pairingSize: ''};
     }
+
+//    handleInput = async (event) => {
+//        event.preventDefault();
+//        const resp = await axios.post(`http://127.0.0.1:5000/randomize?teamsize=${this.state.pairingSize}`);
+//        console.log(resp.data);
+//    }
 
     render () {
         return (
-            <form onSubmit={this.handleInput}>
-                <input
-                    type="text"
-                    placeholder="# of players per team"
-                    value={this.state.pairingSize}
-                    onChange={event => this.setState({pairingSize: event.target.value })}
-                />
-                <button> Randomize</button>
-                <input
-                    type="text"
-                    align="center"
-                    pattern="[0-9.]"
-                    maxLength="1"
-                    name="teamsize"
-                    placeholder="Team Size"
-                    required autoFocus
-                />
-                <button>
-                    Randomize
-                </button>
-
+            <form>
+                <Button>Randomize</Button>
             </form>
         );
     }
@@ -64,9 +49,10 @@ class App extends React.Component {
 
     render() {
         return (
-            < div>
+            < Container style={{margin: 5, minWidth: 310, maxWidth: 310}}>
+                <InputForm />
                 <PairingsList pairings={this.state.pairings} />
-            </div>
+            </Container>
         );
     }
 

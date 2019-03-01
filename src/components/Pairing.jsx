@@ -1,13 +1,13 @@
 const Pairing = (props) => {
     return (
-        <div class="row" style={{margin: 15, backgroundColor: '#BFD3F6'}}>
-            <div>
+        <Row  style={{marginBottom: 10, maxWidth: 300, minWidth: 300, backgroundColor: '#BFD3F6'}}>
+            <Col xs={8}>
                 {props.players.map(player => <PlayerCard {...player} />)}
-            </div>
-            <div style={{margin: 10, display: 'inline-block', fontWeight: 'bold', fontSize: 25, color: 'black', textAlign: 'center', alignContent: 'center'}}>
+            </Col >
+            <Col xs={4} style={{marginTop: 5, fontWeight: 'bold', fontSize: 14, color: 'black', textAlign: 'center', alignContent: 'center', vAlign: 'center'}}>
                 HC: {props.handicap}
-            </div>
-        </div>
+            </Col>
+        </Row>
     );
 }
 

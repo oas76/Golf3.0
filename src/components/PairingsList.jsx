@@ -1,8 +1,8 @@
 const PairingsList = (props) => {
     return (
-        <div class="container-fluid">
+        <Container>
             {props.pairings.map(pairing => <Pairing{...pairing}/>)}
-        </div>
+        </Container>
     )
 }
 

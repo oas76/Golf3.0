@@ -4,4 +4,6 @@ src/components/app.js
 *-lock.json
 .idea/
 venv/
+*.pyc
+*.DS_Store
 
