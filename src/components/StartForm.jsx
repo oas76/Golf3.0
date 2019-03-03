@@ -7,8 +7,6 @@ const TeamSizeSelector = (props) => {
                 <Button value='2' onClick={props.onClickHandler} variant="secondary">2</Button>
                 <Button value='3' onClick={props.onClickHandler} variant="secondary">3</Button>
                 <Button value='4' onClick={props.onClickHandler} variant="secondary">4</Button>
-                <Button value='5' onClick={props.onClickHandler} variant="secondary">5</Button>
-                <Button value='6' onClick={props.onClickHandler} variant="secondary">6</Button>
             </ButtonGroup>
         </ButtonToolbar>
     )
