@@ -11,7 +11,7 @@ class App extends React.Component {
 
     render() {
         return (
-            < Container style={{margin: 5, minWidth: 310, maxWidth: 310}}>
+            < Container style={{margin: 5, minWidth: 320, maxWidth: 320}}>
                 <StartForm onSubmit={this.setNewPairings}/>
                 <PairingsList pairings={this.state.pairings} />
             </Container>
