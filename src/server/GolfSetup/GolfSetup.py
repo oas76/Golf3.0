@@ -36,7 +36,7 @@ def _randomTeamCombination(iterable,nrPlayers,size):
 def _getHandicapForPlayers(players,player_list):
     hc = []
     for p in players:
-        hc += map(lambda x : x['hc'], filter(lambda x: x['Name'] == p, player_list))
+        hc += map(lambda x : x['hc'], filter(lambda x: x['name'] == p, player_list))
     return _calcTeamHc(hc)
 
 def _calcTeamHc(hclist):
@@ -58,10 +58,12 @@ def _calcTeamHc(hclist):
 def createPairing(size=2):
 
     # Define player details, Name and handicap
-    player_list  = P.getPlayers()
+    player_list  = P.getPlayersTest()
+    if size < 1 or size > len(player_list):
+        return {'pairings': None}
 
     # Get player names only
-    player_names = [ entry['Name'] for entry in player_list ]
+    player_names = [ entry['name'] for entry in player_list ]
 
     # Randomiz order of playrs
     random_player_list = np.random.permutation(player_names)
@@ -76,7 +78,9 @@ def createPairing(size=2):
     result = []
     for pairing in possible_pairings:
         entry = {}
-        entry['players'] = pairing
+        entry['players'] = []
+        for player in pairing:
+            entry['players'].append(next((item for item in player_list if item['name'] == player), None))
         entry['hc'] =  _getHandicapForPlayers(pairing,player_list)
         result.append(entry)
 

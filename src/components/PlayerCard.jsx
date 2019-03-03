@@ -7,10 +7,10 @@ const PlayerCard = (props) => {
                     {props.name}
                 </div>
                 <div style={{fontSize: 8 }}>
-                    {props.handicap}.{props.handicapdec}
+                    {props.hc}
                 </div>
             </Col>
         </Row>
     );
-};
+}
 
