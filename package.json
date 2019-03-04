@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db": "less src/components/*.jsx > src/components/app.js && less src/config/dev.cfg >> src/components/app.js &&webpack -d",
-    "pb": "less src/components/*.jsx > src/components/app.js && less src/config/prod.cfg >> src/components/app.js && webpack -p"
+    "db": "less src/config/dev.cfg > src/components/A_vars.jsx &&  less src/components/*.jsx > src/components/app.js && webpack -d",
+    "pb": "less src/config/prod.cfg > src/components/A_vars.jsx && less src/components/*.jsx > src/components/app.js && webpack -p"
   },
   "keywords": [],
   "author": "",
