@@ -1,5 +1,7 @@
 node_modules/
 src/components/app.js
+*.config.js
+package.json
 *-lock.json
 .idea/
 venv/
