@@ -1,7 +1,6 @@
 node_modules/
 src/components/app.js
-*.config.js
-package.json
+src/server/static/*
 *-lock.json
 .idea/
 venv/
