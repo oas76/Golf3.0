@@ -1,13 +1,26 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from GolfSetup import GolfSetup
-
 import traceback
+import uuid
+from pymongo import MongoClient
+
+
+
+
 
 app=Flask(__name__)
-app.config.update(dict(
-    SECRET_KEY="H0le1n0ne",
-    WTF_CSRF_SECRET_KEY="H0le1n0ne"
-))
+
+db_uri = 'mongodb://admin:golfpro1@ds153974.mlab.com:53974/heroku_lx5rwnvr'
+mongo = MongoClient(db_uri)
+jsonblob = mongo.db.jsonblob
+
+@app.route("/db_test",methods=['GET'])
+def db_test():
+    try:
+        jsonblob.insert({'uuid': uuid.uuid4().hex})
+        return jsonify("ok")
+    except Exception, err:
+        traceback.print_exc()
 
 @app.route("/",methods=['GET'])
 def main():
