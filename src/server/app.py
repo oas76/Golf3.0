@@ -12,9 +12,7 @@ app=Flask(__name__)
 db_uri = 'mongodb://admin:golfpro1@ds153974.mlab.com:53974/heroku_lx5rwnvr'
 mongo = MongoClient(db_uri)
 db = mongo.get_database()
-print db.collection_names()
 jsonblob = db.jsonblob
-players = []
 
 @app.route("/",methods=['GET'])
 def main():
@@ -25,7 +23,7 @@ def randomize():
     try:
         teamsize = request.args.get('teamsize')
         if  teamsize.isdigit() and 0 < teamsize:
-            res = GolfSetup.createPairing(size=int(teamsize), player_list=players)
+            res = GolfSetup.createPairing(size=int(teamsize), player_list=_get_players_from_db())
             return jsonify(res)
 
         return jsonify(None)
@@ -36,10 +34,7 @@ def randomize():
 @app.route("/list", methods=['GET'])
 def result():
     try:
-        res = []
-        for entry in jsonblob.find({},projection={'_id': False}):
-            res.append({'players': [entry], 'hc': entry['hc']})
-            players.append(entry)
+        res = map(lambda x: {'players': [x], 'hc': x['hc']}, _get_players_from_db())
         return jsonify({'pairings': res})
 
     except Exception, err:
@@ -56,6 +51,11 @@ def player():
     except Exception, err:
         traceback.print_exc()
 
+def _get_players_from_db():
+    players = [];
+    for entry in jsonblob.find({}, projection={'_id': False}):
+        players.append(entry)
+    return players
 
 def _validate_uuid4(uuid_string):
 

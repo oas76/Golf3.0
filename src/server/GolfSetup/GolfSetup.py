@@ -6,6 +6,9 @@ import functools as func
 import itertools as itertools
 import Players as P
 
+test_data = [{'name': 'Oddis', 'hc': 10}, {'name':'Bjorn', 'hc': 10}, {'name': 'SMU', 'hc': 10}, {'name': 'Poggen', 'hc': 10},{'name': 'Jorgen', 'hc': 10},{'name': 'Anders', 'hc': 10}]
+
+
 def _cleanTeamCobinations(list):
     res = []
     for tc in list:
@@ -87,4 +90,4 @@ def createPairing(size=2,player_list=[]):
 
 
 if __name__ == "__main__":
-    createPairing()
+    print createPairing(size=2,player_list=test_data)
