@@ -1,6 +1,6 @@
 
 
 ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+    <Randomizer />,
+    document.getElementById('root')
 );

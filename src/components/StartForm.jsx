@@ -14,18 +14,10 @@ const TeamSizeSelector = (props) => {
 
 class StartForm extends React.Component {
 
-    state = {pairingSize: '1'};
-
-    handleInput = (event) => {
-        event.preventDefault();
-        this.setState({pairingSize: event.target.value})
-        this.props.onSubmit(event)
-    }
-
     render () {
         return (
             <Row>
-                <TeamSizeSelector onClickHandler={this.handleInput} />
+                <TeamSizeSelector onClickHandler={this.props.onSubmit} />
             </Row>
         );
     }

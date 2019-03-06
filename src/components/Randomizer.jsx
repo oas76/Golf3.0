@@ -1,22 +1,17 @@
 
 
-class App extends React.Component {
+class Randomizer extends React.Component {
 
     state = { pairings: [] };
 
-    setNewPairings = (newdata) => {
-        console.log(newdata);
-        this.setState({pairings: newdata});
-    }
-
     requestPairings = async (event) => {
         const resp = await axios.get(`${WEB_DOMAIN}/randomize?teamsize=${event.target.value}`);
-        this.setNewPairings(resp.data.pairings)
+        this.setState({pairings: resp.data.pairings});
     }
 
     componentDidMount = async () => {
-        const resp = await axios.get(`${WEB_DOMAIN}/result`);
-        this.setNewPairings(resp.data.pairings)
+        const resp = await axios.get(`${WEB_DOMAIN}/list`);
+        this.setState({pairings: resp.data.pairings})
 
     }
 
@@ -24,7 +19,7 @@ class App extends React.Component {
         return (
             < Container style={{margin: 5, minWidth: 320, maxWidth: 320}}>
                 <StartForm onSubmit={this.requestPairings}/>
-                <PairingsList pairings={this.state.pairings} />
+                <PairingsList pairings={this.state.pairings} onDetails={this.requestDetails}/>
             </Container>
         );
     }
