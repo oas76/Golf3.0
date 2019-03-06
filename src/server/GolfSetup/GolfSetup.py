@@ -55,10 +55,9 @@ def _calcTeamHc(hclist):
 ################################################################################
 
 
-def createPairing(size=2):
+def createPairing(size=2,player_list=[]):
 
     # Define player details, Name and handicap
-    player_list  = P.getPlayersTest()
     if size < 1 or size > len(player_list):
         return {'pairings': None}
 

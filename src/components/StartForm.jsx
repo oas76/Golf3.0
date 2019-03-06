@@ -16,12 +16,10 @@ class StartForm extends React.Component {
 
     state = {pairingSize: '1'};
 
-    handleInput = async (event) => {
+    handleInput = (event) => {
         event.preventDefault();
         this.setState({pairingSize: event.target.value})
-        console.log(WEB_DOMAIN)
-        const resp = await axios.get(`${WEB_DOMAIN}/randomize?teamsize=${event.target.value}`);
-        this.props.onSubmit(resp.data)
+        this.props.onSubmit(event)
     }
 
     render () {

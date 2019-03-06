@@ -7,7 +7,10 @@ const PlayerCard = (props) => {
                     {props.name}
                 </div>
                 <div style={{fontSize: 8 }}>
-                    {props.hc}
+                    PlayerHC: {props.hc}
+                </div>
+                <div style={{fontSize: 8 }}>
+                    Points: 100
                 </div>
             </Col>
         </Row>

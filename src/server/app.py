@@ -1,26 +1,20 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from GolfSetup import GolfSetup
+from GolfSetup import Players
+from pymongo import MongoClient
+import os
+import functools
 import traceback
 import uuid
-from pymongo import MongoClient
-
-
-
-
 
 app=Flask(__name__)
 
 db_uri = 'mongodb://admin:golfpro1@ds153974.mlab.com:53974/heroku_lx5rwnvr'
 mongo = MongoClient(db_uri)
-jsonblob = mongo.db.jsonblob
-
-@app.route("/db_test",methods=['GET'])
-def db_test():
-    try:
-        jsonblob.insert({'uuid': uuid.uuid4().hex})
-        return jsonify("ok")
-    except Exception, err:
-        traceback.print_exc()
+db = mongo.get_database()
+print db.collection_names()
+jsonblob = db.jsonblob
+players = []
 
 @app.route("/",methods=['GET'])
 def main():
@@ -30,9 +24,8 @@ def main():
 def randomize():
     try:
         teamsize = request.args.get('teamsize')
-        print teamsize
         if  teamsize.isdigit() and 0 < teamsize:
-            res = GolfSetup.createPairing(size=int(teamsize))
+            res = GolfSetup.createPairing(size=int(teamsize), player_list=players)
             return jsonify(res)
 
         return jsonify(None)
@@ -40,5 +33,18 @@ def randomize():
     except Exception, err:
         traceback.print_exc()
 
+@app.route("/result", methods=['GET'])
+def result():
+    try:
+        res = []
+        for entry in jsonblob.find({},projection={'_id': False}):
+            res.append({'players': [entry] })
+            players.append(entry)
+        return jsonify({'pairings': res})
+
+    except Exception, err:
+        traceback.print_exc()
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=(os.environ['RUN_MODE'] == 'dev' ))
