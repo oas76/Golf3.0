@@ -1,8 +1,12 @@
 {
   "name": "Golf3.0",
   "version": "1.0.0",
-  "description": "",
+  "description": "RaymonTour Golf Grouping Randomizer",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oas76/Golf3.0.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "db": "less src/config/dev.cfg > src/components/A_vars.jsx &&  less src/components/*.jsx > src/components/app.js && webpack -d",
@@ -18,17 +22,21 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.3.4",
+    "@trendmicro/react-buttons": "^1.3.1",
+    "@trendmicro/react-modal": "^3.0.0",
     "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "bootstrap": "^4.3.1",
+    "css-loader": "^2.1.0",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.7",
     "react": "^16.8.3",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-dom": "^16.8.3",
     "react-router-dom": "^4.3.1",
+    "style-loader": "^0.23.1",
     "uuid": "^3.3.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"

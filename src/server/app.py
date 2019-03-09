@@ -51,6 +51,29 @@ def player():
     except Exception, err:
         traceback.print_exc()
 
+@app.route("/player", methods=['POST'])
+def playerUpdate():
+    try:
+        res = ""
+        player_id = request.args.get('uuid')
+        player_name = request.args.get('name')
+        player_hc = float(request.args.get('hc'))
+        if _validate_uuid4(player_id) and player_name and player_hc:
+            res = jsonblob.update_one(
+                {'uuid':player_id},
+                {
+                    "$set": {
+                        "name": player_name,
+                        "hc": player_hc }
+                }
+            )
+            return jsonify("200 OK")
+        else:
+            return jsonify("403 Invalid Input")
+    except Exception, err:
+        traceback.print_exc()
+
+
 def _get_players_from_db():
     players = [];
     for entry in jsonblob.find({}, projection={'_id': False}):

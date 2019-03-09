@@ -1,11 +1,21 @@
 
 class PlayerCard extends React.Component  {
 
-    state = { url: `${WEB_DOMAIN}/player?uuid=${this.props.uuid}` };
+    state = { openModal: false };
+
+    handleClick = (event) => {
+        console.log('...nothing')
+        this.toggleModal()
+
+    };
+
+    toggleModal = () => {
+        this.setState({ openModal: !this.state.openModal });
+    }
 
     render() {
         return (
-            <a href= {this.state.url}>
+            <div onClick={this.handleClick}>
             <Row style={{margin: 5 }}>
                 <Image src={this.props.avatar} width='50px' height='50px' roundedCircle/>
                 <Col style={{display: 'inline-block', margin: 10}}>
@@ -20,8 +30,11 @@ class PlayerCard extends React.Component  {
                     </div>
                 </Col>
             </Row>
-            </a>
-    );
+            {this.state.openModal && (
+                <PlayerDetails data={this.props} toggleFunc={this.handleClick}/> )}
+            </div>
+
+        );
     }
 }
 
