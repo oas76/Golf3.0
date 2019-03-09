@@ -1,15 +1,23 @@
 
 class PlayerCard extends React.Component  {
 
-    state = { openModal: false };
+    state = {   name: this.props.name,
+                hc: this.props.hc,
+                total: this.props.total,
+                openModal: false
+    };
 
     handleClick = (event) => {
-        console.log('...nothing')
         this.toggleModal()
-
     };
 
     toggleModal = () => {
+        if(this.state.openModal){
+            let newname = document.getElementById('playername').value;
+            let newhc = document.getElementById('playerhc').value;
+            this.setState({name: newname});
+            this.setState({hc: newhc});
+        }
         this.setState({ openModal: !this.state.openModal });
     }
 
@@ -20,13 +28,13 @@ class PlayerCard extends React.Component  {
                 <Image src={this.props.avatar} width='50px' height='50px' roundedCircle/>
                 <Col style={{display: 'inline-block', margin: 10}}>
                     <div style={{fontWeight: 'bold', fontSize: 14}}>
-                        {this.props.name}
+                        {this.state.name}
                     </div>
-                    <div style={{fontSize: 8 }}>
-                        PlayerHC: {this.props.hc}
+                    <div style={{fontSize: 10 }}>
+                        PlayerHC: {this.state.hc}
                     </div>
-                    <div style={{fontSize: 8 }}>
-                        Points: {this.props.total }
+                    <div style={{fontSize: 10 }}>
+                        Points: {this.state.total }
                     </div>
                 </Col>
             </Row>

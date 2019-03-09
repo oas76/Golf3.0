@@ -17,9 +17,9 @@ class Randomizer extends React.Component {
 
     render() {
         return (
-            < Container style={{margin: 5, minWidth: 320, maxWidth: 320}}>
+            < Container style={{margin: 'auto', minWidth: 450, maxWidth: 450}}>
                 <StartForm onSubmit={this.requestPairings}/>
-                <PairingsList pairings={this.state.pairings} onDetails={this.requestDetails}/>
+                <PairingsList pairings={this.state.pairings} />
             </Container>
         );
     }

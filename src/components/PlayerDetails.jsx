@@ -16,12 +16,11 @@ class PlayerDetails extends React.Component {
     }
 
     updateEntry = async (event) => {
-        this.props.toggleFunc(event)
         let newname = document.getElementById('playername').value;
         let newhc = document.getElementById('playerhc').value;
         const resp = await axios.post(`${WEB_DOMAIN}/player?uuid=${this.state.player.uuid}&name=${newname}&hc=${newhc}`);
         console.log(resp)
-        location.reload(true)
+        this.props.toggleFunc(event) ;
     }
 
     verifyValue = (event) => {
