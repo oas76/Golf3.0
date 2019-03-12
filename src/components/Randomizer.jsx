@@ -2,7 +2,8 @@
 
 class Randomizer extends React.Component {
 
-    state = { pairings: [] };
+    state = { pairings: [],
+              players: [] };
 
     requestPairings = async (event) => {
         const resp = await axios.get(`${WEB_DOMAIN}/randomize?teamsize=${event.target.value}`);
@@ -11,8 +12,8 @@ class Randomizer extends React.Component {
 
     componentDidMount = async () => {
         const resp = await axios.get(`${WEB_DOMAIN}/list`);
-        this.setState({pairings: resp.data.pairings})
-
+        this.setState({pairings: resp.data.pairings});
+        this.setState({players: _.map(resp.data.pairings,(pairing) => {return pairing.players[0]})});
     }
 
     render() {
@@ -20,6 +21,7 @@ class Randomizer extends React.Component {
             < Container style={{margin: 'auto', minWidth: 375, maxWidth: 375}}>
                 <StartForm onSubmit={this.requestPairings}/>
                 <PairingsList pairings={this.state.pairings} />
+                <AppFooter players={this.state.players} />
             </Container>
         );
     }

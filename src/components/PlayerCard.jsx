@@ -26,7 +26,7 @@ class PlayerCard extends React.Component  {
             <div onClick={this.handleClick}>
             <Row style={{margin: 5 }}>
                 <Image src={this.props.avatar} width='50px' height='50px' roundedCircle/>
-                <Col style={{display: 'inline-block', margin: 10}}>
+                <Col style={{display: 'inline-block', margin: 5}}>
                     <div style={{fontWeight: 'bold', fontSize: 14}}>
                         {this.state.name}
                     </div>

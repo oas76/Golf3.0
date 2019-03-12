@@ -54,12 +54,19 @@ class PlayerDetails extends React.Component {
                 <Modal.Header>
                     <Container>
                         <Row>
-                            <Col>
+                            <Col xs={4}>
                                 <Image src={this.state.player.avatar} width='75px' height='75px' roundedCircle/>
                             </Col>
-                            <Col style={{fontWeight: 'bold', fontSize: 18, vAlign: 'center', textAlign: 'center'}}>
+                            <Col xs={4} style={{fontWeight: 'bold', fontSize: 18, vAlign: 'center', textAlign: 'center'}}>
                                 {this.state.player.name}
                             </Col>
+                            <Col xs={4} style={{fontSize: 14, vAlign: 'center', textAlign: 'left'}}>
+                                Golf: 0 <br/>
+                                Poker: 0 <br/>
+                                Other: 0 <br/>
+                                <b size="16">Total: {this.state.player.total}</b>
+                            </Col>
+
                         </Row>
                     </Container>
                 </Modal.Header>
@@ -70,7 +77,7 @@ class PlayerDetails extends React.Component {
                                 <InputGroup.Prepend>
                                     <InputGroup.Text id="inputGroup-sizing-sm">Name</InputGroup.Text>
                                 </InputGroup.Prepend>
-                                <FormControl id="playername" pattern='^[a-øA-Ø]{1,20}$' type="text" maxLength="20"
+                                <FormControl id="playername" pattern='^[a-øA-Ø]{1,10}$' type="text" maxLength="10"
                                              defaultValue={this.state.player.name} aria-label="name"
                                              aria-describedby="inputGroup-sizing-sm" onChange={this.verifyValue}/>
                             </InputGroup>
