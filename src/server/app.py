@@ -40,6 +40,53 @@ def result():
     except Exception, err:
         traceback.print_exc()
 
+@app.route("/points", methods=['POST'])
+def set_points():
+    try:
+        player_id = request.args.get('uuid')
+        result = request.args.get('value')
+        game_type = request.args.get('gametype')
+        entry = {}
+        if _validate_uuid4(player_id) and result and game_type:
+            entry['game'] = game_type
+            entry['points'] = float(result)
+
+            res = jsonblob.update_one(
+                {'uuid': player_id},
+                {
+                    "$addToSet": {
+                        "points": entry
+                        }
+                }
+            )
+
+            res = jsonblob.find_one(
+                {'uuid': player_id}, projection=['points']
+            )
+            points = res['points']
+            points_golf = functools.reduce(lambda x,y:  y['points'] + x, filter(lambda x: x['game'] == 'Golf',points),0)
+            points_poker = functools.reduce(lambda x, y: y['points'] + x, filter(lambda x: x['game'] == 'Poker', points),0)
+            points_other = functools.reduce(lambda x,y:  y['points'] + x, filter(lambda x: x['game'] == 'Other',points),0)
+            print points_golf
+            print points_poker
+            print points_other
+
+            res = jsonblob.update_one(
+                {'uuid': player_id},
+                {
+                    "$set": {
+                        "total": points_golf+points_other+points_poker
+                        }
+                }
+            )
+
+            return jsonify(["200 OK"])
+        else:
+            return jsonify(["404 NOK"])
+
+    except Exception, err:
+        traceback.print_exc()
+
 @app.route("/player", methods=['GET'])
 def player():
     try:
@@ -78,8 +125,7 @@ def _get_players_from_db():
     players = [];
     for entry in jsonblob.find({}, projection={'_id': False}):
         players.append(entry)
-    return players
-
+    return sorted(players,key= lambda x: x['total'],reverse=True)
 def _validate_uuid4(uuid_string):
 
     """

@@ -15,6 +15,12 @@ class PlayerDetails extends React.Component {
         console.log('Nothing')
     }
 
+    getGolfScore = () => {
+        console.log(this.state.player.points)
+        console.log(_.filter(this.state.player.points,function(x){x.game =='Golf';}))
+        return _.reduce(_.filter(this.state.player.points,function(x){x.game =='Golf';}), function(x,y){x + y.points},0);
+    }
+
     updateEntry = async (event) => {
         let newname = document.getElementById('playername').value;
         let newhc = document.getElementById('playerhc').value;
@@ -61,7 +67,7 @@ class PlayerDetails extends React.Component {
                                 {this.state.player.name}
                             </Col>
                             <Col xs={4} style={{fontSize: 14, vAlign: 'center', textAlign: 'left'}}>
-                                Golf: 0 <br/>
+                                Golf: {this.getGolfScore()} <br/>
                                 Poker: 0 <br/>
                                 Other: 0 <br/>
                                 <b size="16">Total: {this.state.player.total}</b>
