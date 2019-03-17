@@ -6,6 +6,7 @@ import os
 import functools
 import traceback
 from uuid import UUID
+import time
 
 app=Flask(__name__)
 
@@ -65,6 +66,7 @@ def randomize():
 @app.route("/list", methods=['GET'])
 def result():
     try:
+        time.sleep(1)
         res = map(lambda x: {'players': [x], 'hc': x['hc']}, _get_players_from_db())
         return jsonify({'pairings': res})
 
@@ -85,11 +87,12 @@ def set_points():
             res = jsonblob.update_one(
                 {'uuid': player_id},
                 {
-                    "$addToSet": {
+                    "$push": {
                         "points": entry
                         }
                 }
             )
+
             return jsonify(["200 OK"])
         else:
             return jsonify(["404 NOK"])

@@ -45,9 +45,7 @@ class Points extends React.Component {
         event.stopPropagation();
         for (let points of this.state.playerPoints) {
             if (points) {
-                console.log(points);
                 const resp = axios.post(`${WEB_DOMAIN}/points?gametype=${this.state.gameType}&uuid=${points.uuid}&value=${points.points}`);
-                console.log(resp);
             }
         }
         this.props.show()
