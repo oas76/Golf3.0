@@ -37,7 +37,7 @@ class SimplePlayerCard extends React.Component  {
                                              min="0" max="50" step="0.5"
                                              onChange={this.upstateValues} aria-label="hc"
                                              aria-describedby="inputGroup-sizing-sm"
-                                             value={this.props.readpoints(this.state.id)} />
+                                             defaultValue={this.props.readpoints(this.state.id)} />
                             </InputGroup>
                         </div>
                     </Col>

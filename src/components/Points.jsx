@@ -37,19 +37,19 @@ class Points extends React.Component {
 
     updateInputState = () => {
         let re = new RegExp('^[0-9]?[0-9](\.5)?$');
-        let new_state = _.reduce(this.state.playerPoints, function (x, y) { return (re.test(y) && x);}, true)
+        let new_state = _.reduce(this.state.playerPoints, function (x, y) { return (re.test(y.points) && x);}, true)
         this.setState(() => { return {isReady: new_state }});
     }
 
     savePoints = async (event) => {
-        let points;
-        for (points in this.state.playerPoints) {
+        event.stopPropagation();
+        for (let points of this.state.playerPoints) {
             if (points) {
-                const resp = axios.post(`${WEB_DOMAIN}/points?gametype=${this.state.gameType}&uuid=${points}&value=${this.state.playerPoints[points]}`)
-                console.log(resp)
+                console.log(points);
+                const resp = axios.post(`${WEB_DOMAIN}/points?gametype=${this.state.gameType}&uuid=${points.uuid}&value=${points.points}`);
+                console.log(resp);
             }
         }
-        event.stopPropagation();
         this.props.show()
     }
 

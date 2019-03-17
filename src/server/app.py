@@ -19,16 +19,25 @@ settings = db.settings
 def main():
     return render_template('index.html')
 
+@app.route("/settings",methods=['GET'])
+def get_settings():
+    for res in settings.find({'id': 1}, projection={'_id': False}):
+        print res
+        return jsonify(res)
+
 @app.route("/settings/slopevalue",methods=['GET'])
 def get_slope():
-    for entry in settings.find({}, projection={'_id': False}):
+    for entry in settings.find({'id': 1}, projection={'_id': False}):
         print entry
+        return jsonify(entry)
 
 @app.route("/settings/slopevalue",methods=['POST'])
 def set_slope():
-    new_slope = request.args.get('slope')
+    new_slope = float(request.args.get('slope'))
+    print new_slope
     if new_slope > 55 and new_slope < 155:
-        res = settings.update(
+        res = settings.update_one(
+            {'id': 1},
             {
                 "$set": {
                     "slope_value": new_slope

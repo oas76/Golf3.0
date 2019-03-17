@@ -1,7 +1,7 @@
 class Pairing extends React.Component {
 
     state = {hc: this.props.hc,
-             strokes: Math.round((((Number(this.props.hc) * SLOPE_VALUE) / 113) * 100) / 100) };
+             strokes: Math.round((((Number(this.props.hc) * this.props.settings.slope_value) / 113) * 100) / 100) };
 
     render() {
         return (

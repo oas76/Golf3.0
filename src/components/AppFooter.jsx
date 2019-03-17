@@ -1,14 +1,24 @@
 
 class AppFooter extends React.Component {
 
-    state = { pointsModal: false };
+    state = { pointsModal: false,
+              settingsModal: false };
 
     handleClick = (event) => {
-        this.toggleModal()
-    };
+        this.toggleModal();
+    }
+
+    handleSettings = (event) => {
+        this.toggleSettings();
+    }
 
     toggleModal = () => {
         this.setState({ pointsModal: !this.state.pointsModal });
+        this.props.update();
+    }
+
+    toggleSettings = () => {
+        this.setState({ settingsModal: !this.state.settingsModal });
         this.props.update();
     }
 
@@ -25,6 +35,8 @@ class AppFooter extends React.Component {
             </Row>
                 {this.state.pointsModal && (
                     <Points show={this.toggleModal} players={this.props.players} /> )}
+                {this.state.settingsModal && (
+                    <Settings settings={this.props.settings} show={this.toggleSettings}  /> )}
             </div>
 
         );
