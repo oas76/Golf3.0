@@ -1,15 +1,17 @@
 class SimplePlayerCard extends React.Component  {
 
     state = {   name: this.props.name,
-                total: this.props.total,
-                id: this.props.uuid
+                total: _.reduce(this.props.points, function(z,y){return z + y.points;},0),
+                id: this.props.uuid,
+                value: 0
     };
 
     upstateValues = (event) => {
         let id = this.state.id;
         let val = event.target.value;
+        this.setState({value: val})
         this.props.updatefunc(id,val);
-        event.stopPropagation();
+        //event.stopPropagation();
     }
 
     render() {
@@ -31,9 +33,13 @@ class SimplePlayerCard extends React.Component  {
                     </Col>
                     <Col xs={3}>
                         <div style={{fontSize: 10 }}>
-                            <input onChange={this.upstateValues} pattern='^[0-9]?[0-9](\.5)?$'
-                                   size='4' type='number' step='0.5' defaultValue='0'/>
-
+                            <InputGroup size="sm" className="mb-3">
+                                <FormControl id="playerpoints" pattern='^[0-9]?[0-9](\.5)?$' type="number" maxLength="4"
+                                             min="0" max="50" step="0.5"
+                                             onChange={this.upstateValues} aria-label="hc"
+                                             aria-describedby="inputGroup-sizing-sm"
+                                             value={this.state.value} />
+                            </InputGroup>
                         </div>
                     </Col>
                 </Row>

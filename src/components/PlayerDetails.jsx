@@ -4,33 +4,42 @@ class PlayerDetails extends React.Component {
     state = {
               player: this.props.data,
               nameOk: true,
-              hcOk: true
-            }
+              hcOk: true,
+              totalPoints: _.reduce(this.props.data.points, function(z,y){return z + y.points;},0),
+              golfPoints: _.reduce(_.filter(this.props.data.points,function(x){return x.game =='Golf';}), function(z,y){return z + y.points;},0),
+              pokerPoints: _.reduce(_.filter(this.props.data.points,function(x){return x.game =='Poker';}), function(z,y){return z + y.points;},0),
+              otherPoints: _.reduce(_.filter(this.props.data.points,function(x){return x.game =='Other';}), function(z,y){return z + y.points;},0)
+    };
 
     name_reg = new RegExp('^[a-øA-Ø]{1,20}$');
     hc_reg = new RegExp('^([1-3])?[0-9]\.[0-9]?$');
 
     noAction = (event) => {
-        event.stopPropagation()
-        console.log('Nothing')
-    }
-
-    getGolfScore = () => {
-        console.log(this.state.player.points)
-        console.log(_.filter(this.state.player.points,function(x){x.game =='Golf';}))
-        return _.reduce(_.filter(this.state.player.points,function(x){x.game =='Golf';}), function(x,y){x + y.points},0);
+        event.stopPropagation();
+        console.log('Nothing');
     }
 
     updateEntry = async (event) => {
         let newname = document.getElementById('playername').value;
         let newhc = document.getElementById('playerhc').value;
         const resp = await axios.post(`${WEB_DOMAIN}/player?uuid=${this.state.player.uuid}&name=${newname}&hc=${newhc}`);
-        console.log(resp)
+        console.log(resp);
         this.props.toggleFunc(event) ;
     }
 
-    verifyValue = (event) => {
+    componentDidMount = async () => {
+        const resp = await axios.get(`${WEB_DOMAIN}/player?uuid=${this.state.player.uuid}`);
+        console.log(resp.data);
+        this.setState (
+            {player: resp.data,
+            totalPoints: _.reduce(resp.data.points, function(z,y){return z + y.points;},0),
+            golfPoints: _.reduce(_.filter(resp.data.points,function(x){return x.game =='Golf';}), function(z,y){return z + y.points;},0),
+            pokerPoints: _.reduce(_.filter(resp.data.points,function(x){return x.game =='Poker';}), function(z,y){return z + y.points;},0),
+            otherPoints: _.reduce(_.filter(resp.data.points,function(x){return x.game =='Other';}), function(z,y){return z + y.points;},0)
+            });
+    }
 
+    verifyValue = (event) => {
 
         event.stopPropagation();
         console.log(event.target.id);
@@ -67,10 +76,10 @@ class PlayerDetails extends React.Component {
                                 {this.state.player.name}
                             </Col>
                             <Col xs={4} style={{fontSize: 14, vAlign: 'center', textAlign: 'left'}}>
-                                Golf: {this.getGolfScore()} <br/>
-                                Poker: 0 <br/>
-                                Other: 0 <br/>
-                                <b size="16">Total: {this.state.player.total}</b>
+                                Golf: {this.state.golfPoints} <br/>
+                                Poker: {this.state.pokerPoints} <br/>
+                                Other: {this.state.otherPoints} <br/>
+                                <b size="16">Total: {this.state.totalPoints}</b>
                             </Col>
 
                         </Row>

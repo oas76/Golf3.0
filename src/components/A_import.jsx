@@ -23,5 +23,5 @@ import '@trendmicro/react-modal/dist/react-modal.css';
 import '@trendmicro/react-buttons/dist/react-buttons.css';
 
 
-
+const SLOPE_VALUE=113
 

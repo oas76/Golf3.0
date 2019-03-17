@@ -3,7 +3,7 @@ class PlayerCard extends React.Component  {
 
     state = {   name: this.props.name,
                 hc: this.props.hc,
-                total: this.props.total,
+                total: _.reduce(this.props.points, function(z,y){return z + y.points;},0),
                 openModal: false
     };
 

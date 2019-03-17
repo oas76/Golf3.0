@@ -1,8 +1,11 @@
 class Points extends React.Component {
 
-    state = {players: this.props.players,
-             gameType: 'Golf',
-             playerPoints: {} };
+    state = {
+        players: this.props.players,
+        gameType: 'Golf',
+        playerPoints: {},
+        isReady: true
+    };
 
     setGameTypeGolf = (event) => {
         this.setState({gameType: 'Golf'})
@@ -16,18 +19,38 @@ class Points extends React.Component {
         this.setState({gameType: 'Other'})
     }
 
-    updatePoints = (id,val) => {
+    updatePoints = (id, val) => {
         console.log(id, val);
+        let currVal = _find(this.state.playerPoints,function(x){return x['uuid'] == id;})
+        if(!currVal)
+            this.setState({ ...this.state.playerPoints,
+                               [uuid: id, points: val ]}
+
+        //this.updateInputState();
+    }
+
+    updateAggregatedState = () => {
+        isReady: re.test(val) && _.reduce(_.filter(prevState.playerPoints, function (x) {
+            return Object.keys(x)[0] != id
+        }), function (x, y) {
+            return (re.test(y) && x)
+        }, true)
+
+    }
+
+
+    updateInputState = () => {
         let re = new RegExp('^[0-9]?[0-9](\.5)?$');
-        if(re.test(val))
-            this.setState(() => { this.state.playerPoints[id] = val });
+        let new_state = _.reduce(this.state.playerPoints, function (x, y) { console.log(re.test(y)); return (re.test(y) && x);}, true)
+        this.setState(() => { return {isReady: new_state }});
     }
 
     savePoints = async (event) => {
-        let points, val ;
-        for(points in this.state.playerPoints){
-            if(points){
+        let points;
+        for (points in this.state.playerPoints) {
+            if (points) {
                 const resp = axios.post(`${WEB_DOMAIN}/points?gametype=${this.state.gameType}&uuid=${points}&value=${this.state.playerPoints[points]}`)
+                console.log(resp)
             }
         }
         event.stopPropagation();
@@ -55,7 +78,7 @@ class Points extends React.Component {
                     </Container>
                 </Modal.Header>
                 <Modal.Body padding>
-                    <Container>
+                    <Container >
                         { this.props.players.map (player => <SimplePlayerCard updatefunc={this.updatePoints} key={uuid.v4()} {...player}/>) }
                     </Container>
                 </Modal.Body>
@@ -63,6 +86,7 @@ class Points extends React.Component {
                     <ModalButton
                         btnStyle="primary"
                         onClick={this.savePoints}
+                        disabled={ this.state.isReady ? false : true  }
                         >
                         Save
                     </ModalButton>
