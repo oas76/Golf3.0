@@ -3,7 +3,7 @@ class Points extends React.Component {
     state = {
         players: this.props.players,
         gameType: 'Golf',
-        playerPoints: {},
+        playerPoints: [],
         isReady: true
     };
 
@@ -21,27 +21,23 @@ class Points extends React.Component {
 
     updatePoints = (id, val) => {
         console.log(id, val);
-        let currVal = _find(this.state.playerPoints,function(x){return x['uuid'] == id;})
-        if(!currVal)
-            this.setState({ ...this.state.playerPoints,
-                               [uuid: id, points: val ]}
-
-        //this.updateInputState();
+        let currVal = _.find(this.state.playerPoints,function(x){return x['uuid'] == id;});
+        if(!currVal && val > 0) {
+            this.setState({playerPoints: [...this.state.playerPoints, {'uuid': id, 'points': val}]});
+            this.updateInputState();
+        }
+        else if(currVal && currVal.points != val){
+            let new_list = _.filter(this.state.playerPoints,function(x){return x.uuid != id;});
+            this.setState({ playerPoints: [ ...new_list, {'uuid': id, 'points': val }] });
+            this.updateInputState();
+            }
+        else
+            console.log('No Change')
     }
-
-    updateAggregatedState = () => {
-        isReady: re.test(val) && _.reduce(_.filter(prevState.playerPoints, function (x) {
-            return Object.keys(x)[0] != id
-        }), function (x, y) {
-            return (re.test(y) && x)
-        }, true)
-
-    }
-
 
     updateInputState = () => {
         let re = new RegExp('^[0-9]?[0-9](\.5)?$');
-        let new_state = _.reduce(this.state.playerPoints, function (x, y) { console.log(re.test(y)); return (re.test(y) && x);}, true)
+        let new_state = _.reduce(this.state.playerPoints, function (x, y) { return (re.test(y) && x);}, true)
         this.setState(() => { return {isReady: new_state }});
     }
 

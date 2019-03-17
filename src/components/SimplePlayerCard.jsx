@@ -11,7 +11,7 @@ class SimplePlayerCard extends React.Component  {
         let val = event.target.value;
         this.setState({value: val})
         this.props.updatefunc(id,val);
-        //event.stopPropagation();
+        event.stopPropagation();
     }
 
     render() {
