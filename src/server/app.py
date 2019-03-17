@@ -13,10 +13,32 @@ db_uri = 'mongodb://admin:golfpro1@ds153974.mlab.com:53974/heroku_lx5rwnvr'
 mongo = MongoClient(db_uri)
 db = mongo.get_database()
 jsonblob = db.jsonblob
+settings = db.settings
 
 @app.route("/",methods=['GET'])
 def main():
     return render_template('index.html')
+
+@app.route("/settings/slopevalue",methods=['GET'])
+def get_slope():
+    for entry in settings.find({}, projection={'_id': False}):
+        print entry
+
+@app.route("/settings/slopevalue",methods=['POST'])
+def set_slope():
+    new_slope = request.args.get('slope')
+    if new_slope > 55 and new_slope < 155:
+        res = settings.update(
+            {
+                "$set": {
+                    "slope_value": new_slope
+                }
+            }
+        )
+        return jsonify("200 OK")
+    else:
+        return jsonify("400 NOK")
+
 
 @app.route("/randomize", methods=['GET'])
 def randomize():

@@ -53,6 +53,14 @@ class Points extends React.Component {
         this.props.show()
     }
 
+    readPoints = (id) => {
+        let res = _.find(this.state.playerPoints, function(x){return x.uuid == id;} );
+        if(res)
+            return res.points;
+        else
+            return 0;
+    }
+
 
     render() {
         return(
@@ -75,7 +83,7 @@ class Points extends React.Component {
                 </Modal.Header>
                 <Modal.Body padding>
                     <Container >
-                        { this.props.players.map (player => <SimplePlayerCard updatefunc={this.updatePoints} key={uuid.v4()} {...player}/>) }
+                        { this.props.players.map (player => <SimplePlayerCard readpoints={this.readPoints} updatefunc={this.updatePoints} key={uuid.v4()} {...player}/>) }
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>

@@ -2,8 +2,7 @@ class SimplePlayerCard extends React.Component  {
 
     state = {   name: this.props.name,
                 total: _.reduce(this.props.points, function(z,y){return z + y.points;},0),
-                id: this.props.uuid,
-                value: 0
+                id: this.props.uuid
     };
 
     upstateValues = (event) => {
@@ -38,7 +37,7 @@ class SimplePlayerCard extends React.Component  {
                                              min="0" max="50" step="0.5"
                                              onChange={this.upstateValues} aria-label="hc"
                                              aria-describedby="inputGroup-sizing-sm"
-                                             value={this.state.value} />
+                                             value={this.props.readpoints(this.state.id)} />
                             </InputGroup>
                         </div>
                     </Col>
