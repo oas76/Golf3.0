@@ -1,7 +1,8 @@
 class Settings extends React.Component {
 
     state = {
-        slope: this.props.settings.slope_value
+        slope: this.props.settings.slope_value,
+        disableUpdate: false
     }
 
     saveSettings = async (event) => {
@@ -13,8 +14,13 @@ class Settings extends React.Component {
 
     updateSlope = (event) => {
         let val = event.target.value;
-        if (val != this.state.slope) {
+        let re = new RegExp('^[1,5-9]?[0-9][0-9]?$');
+        if (re.test(val) && Number(val) >= 55 && Number(val) <= 155 && val != this.state.slope) {
+            this.setState({disableUpdate: false});
             this.setState({slope: val});
+        }
+        else{
+            this.setState({disableUpdate: true});
         }
     }
 
@@ -46,6 +52,7 @@ class Settings extends React.Component {
                     <ModalButton
                         btnStyle="primary"
                         onClick={this.saveSettings}
+                        disabled={this.state.disableUpdate}
                     >
                         Save
                     </ModalButton>

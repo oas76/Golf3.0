@@ -33,8 +33,8 @@ class SimplePlayerCard extends React.Component  {
                     <Col xs={3}>
                         <div style={{fontSize: 10 }}>
                             <InputGroup size="sm" className="mb-3">
-                                <FormControl id="playerpoints" pattern='^[0-9]?[0-9](\.5)?$' type="number" maxLength="4"
-                                             min="0" max="50" step="0.5"
+                                <FormControl id="playerpoints" pattern='^[0-9]?[0-9](.5)?$' type="number" maxLength="4"
+                                             min="0" max="40" step="0.5"
                                              onChange={this.upstateValues} aria-label="hc"
                                              aria-describedby="inputGroup-sizing-sm"
                                              defaultValue={this.props.readpoints(this.state.id)} />

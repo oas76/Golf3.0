@@ -4,7 +4,7 @@ class Points extends React.Component {
         players: this.props.players,
         gameType: 'Golf',
         playerPoints: [],
-        isReady: true
+        notValid: false
     };
 
     setGameTypeGolf = (event) => {
@@ -23,22 +23,22 @@ class Points extends React.Component {
         console.log(id, val);
         let currVal = _.find(this.state.playerPoints,function(x){return x['uuid'] == id;});
         if(!currVal && val > 0) {
-            this.setState({playerPoints: [...this.state.playerPoints, {'uuid': id, 'points': val}]});
-            this.updateInputState();
+            this.setState((prevState) => { return {playerPoints: [...prevState.playerPoints, {'uuid': id, 'points': val}]} },this.updateInputState);
         }
         else if(currVal && currVal.points != val){
             let new_list = _.filter(this.state.playerPoints,function(x){return x.uuid != id;});
-            this.setState({ playerPoints: [ ...new_list, {'uuid': id, 'points': val }] });
-            this.updateInputState();
+            this.setState(() => { return { playerPoints: [ ...new_list, {'uuid': id, 'points': val }]} },this.updateInputState);
             }
         else
             console.log('No Change')
+
     }
 
     updateInputState = () => {
-        let re = new RegExp('^[0-9]?[0-9](\.5)?$');
-        let new_state = _.reduce(this.state.playerPoints, function (x, y) { return (re.test(y.points) && x);}, true)
-        this.setState(() => { return {isReady: new_state }});
+        let re = new RegExp('^[0-9]?[0-9](.5)?$');
+        let new_state = _.reduce(this.state.playerPoints, function (x, y) { return ((re.test(y.points) && Number(y.points)>=0 && Number(y.points) <= 40) && x);}, true);
+        console.log(new_state);
+        this.setState(() => { return {notValid: !new_state }});
     }
 
     savePoints = async (event) => {
@@ -88,7 +88,7 @@ class Points extends React.Component {
                     <ModalButton
                         btnStyle="primary"
                         onClick={this.savePoints}
-                        disabled={ this.state.isReady ? false : true  }
+                        disabled={this.state.notValid}
                         >
                         Save
                     </ModalButton>
