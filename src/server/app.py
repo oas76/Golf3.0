@@ -76,22 +76,26 @@ def result():
 @app.route("/points", methods=['POST'])
 def set_points():
     try:
-        player_id = request.args.get('uuid')
-        result = request.args.get('value')
         game_type = request.args.get('gametype')
-        entry = {}
-        if _validate_uuid4(player_id) and result and game_type:
-            entry['game'] = game_type
-            entry['points'] = float(result)
-
-            res = jsonblob.update_one(
-                {'uuid': player_id},
-                {
-                    "$push": {
-                        "points": entry
+        data = request.get_json()
+        player_id = ""
+        result = ""
+        db_val = {}
+        if data and game_type:
+            for entry in data:
+                db_val = {}
+                db_val['game'] = game_type
+                db_val['points'] = float(entry['points'])
+                player_id = entry['uuid']
+                if _validate_uuid4(player_id):
+                    res = jsonblob.update_one(
+                        {'uuid': player_id},
+                        {
+                         "$push": {
+                                "points": db_val
+                                }
                         }
-                }
-            )
+                    )
 
             return jsonify(["200 OK"])
         else:

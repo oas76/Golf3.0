@@ -43,10 +43,14 @@ class Points extends React.Component {
 
     savePoints = async (event) => {
         event.stopPropagation();
+        let parray = [];
         for (let points of this.state.playerPoints) {
             if (points) {
-                const resp = axios.post(`${WEB_DOMAIN}/points?gametype=${this.state.gameType}&uuid=${points.uuid}&value=${points.points}`);
+                parray = [...parray, points];
             }
+        }
+        if (parray.length > 0) {
+            const resp = await axios.post(`${WEB_DOMAIN}/points?gametype=${this.state.gameType}`, parray);
         }
         this.props.show()
     }
