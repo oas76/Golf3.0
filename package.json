@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "db": "less src/config/dev.cfg > src/components/A_vars.jsx &&  less src/components/*.jsx > src/components/app.js && webpack -d",
     "pb": "less src/config/prod.cfg > src/components/A_vars.jsx && less src/components/*.jsx > src/components/app.js && webpack -p",
-    "heroku-postbuild": "less src/config/prod.cfg > src/components/A_vars.jsx && less src/components/*.jsx > src/components/app.js && webpack -p"
+    "heroku-postbuild": "less src/config/prod.cfg > src/components/A_vars.jsx && less src/components/*.jsx > src/components/app.js && webpack -p",
+    "full": "npm run db && python src/server/app.py"
   },
   "keywords": [],
   "author": "",
