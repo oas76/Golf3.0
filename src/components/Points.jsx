@@ -85,7 +85,7 @@ class Points extends React.Component {
                 </Modal.Header>
                 <Modal.Body padding>
                     <Container >
-                        { this.props.players.map (player => <SimplePlayerCard readpoints={this.readPoints} updatefunc={this.updatePoints} key={uuid.v4()} {...player}/>) }
+                        { this.props.players.map (player => <SimplePlayerCard readpoints={this.readPoints} updatefunc={this.updatePoints} key={player.uuid} {...player}/>) }
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>
