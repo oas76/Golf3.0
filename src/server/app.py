@@ -137,6 +137,19 @@ def playerUpdate():
     except Exception, err:
         traceback.print_exc()
 
+@app.route("/deletepoints", methods=['GET'])
+def deletePoints():
+    try:
+        res = jsonblob.update_many(
+                    {},
+                    {
+                        "$set": {
+                            "points": []}
+                    }
+               )
+        return jsonify("200 OK")
+    except Exception, err:
+        traceback.print_exc()
 
 def _get_players_from_db():
     players = [];
