@@ -34,6 +34,11 @@ Install all node dependencies from project root directory, using
 
 >>npm install
 
+Now, its time to set an env variable called RUN_MODE. This should be set to either 'prod' or 'dev'
+NB, if you are using virtualenv, make sure to set this variable in the virrtualenv ( bin/activate)
+>>export RUN_MODE='dev'
+In production, the environment variable should be 'prod', obviously.
+
 All good, compile and run your project using npm
 
 >> npm run full
