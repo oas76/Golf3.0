@@ -49,6 +49,28 @@ def set_slope():
     else:
         return jsonify("400 NOK")
 
+@app.route("/settings/touryear",methods=['GET'])
+def get_year():
+    for entry in settings.find({'id': 1}, projection={'_id': False}):
+        print entry
+        return jsonify(entry)
+
+@app.route("/settings/touryear",methods=['POST'])
+def set_year():
+    new_year = float(request.args.get('year'))
+    print new_year
+    if new_year > 2100 and new_year < 2019:
+        res = settings.update_one(
+            {'id': 1},
+            {
+                "$set": {
+                    "tour_year": new_year
+                }
+            }
+        )
+        return jsonify("200 OK")
+    else:
+        return jsonify("400 NOK")    
 
 @app.route("/randomize", methods=['GET'])
 def randomize():
