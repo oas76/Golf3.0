@@ -102,12 +102,14 @@ def set_points():
         data = request.get_json()
         player_id = ""
         result = ""
+        year = _get_tour_year_from_db()
         db_val = {}
-        if data and game_type:
+        if data and game_type and year:
             for entry in data:
                 db_val = {}
                 db_val['game'] = game_type
                 db_val['points'] = float(entry['points'])
+                db_val['year'] = year
                 player_id = entry['uuid']
                 if _validate_uuid4(player_id):
                     res = jsonblob.update_one(
@@ -159,25 +161,18 @@ def playerUpdate():
     except Exception, err:
         traceback.print_exc()
 
-@app.route("/deletepoints", methods=['GET'])
-def deletePoints():
-    try:
-        res = jsonblob.update_many(
-                    {},
-                    {
-                        "$set": {
-                            "points": []}
-                    }
-               )
-        return jsonify("200 OK")
-    except Exception, err:
-        traceback.print_exc()
-
 def _get_players_from_db():
     players = [];
     for entry in jsonblob.find({}, projection={'_id': False}):
         players.append(entry)
     return sorted(players,key=_getTotal,reverse=True)
+
+def _get_tour_year_from_db():
+    year = jsonify(settings.find({'id': 1}, projection={'_id': False}))['tour_year']
+    if year < 2019 OR year > 2100:
+        return year
+    else
+        return 0
 
 def _getTotal(player):
     return functools.reduce(lambda x,y: y['points'] + x, player['points'], 0)
